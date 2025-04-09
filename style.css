@@ -1,0 +1,8 @@
+body {
+  text-align: center;
+  margin-top: 24px;
+}
+body > * {
+    margin-bottom: 16px;
+}
+
