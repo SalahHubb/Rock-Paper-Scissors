@@ -4,9 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    
+    <div class="players">
+        <p>You : <span id="usrScore">0</span></p>
+        <p>Vs</p>
+        <p>Computer : <span id="cpuScore">0</span> </p>
+    </div>
+
+    <div class="rounds-result">
+       choose one and start the game ..
+    </div>
+
+    <div class="buttons">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissor">Scissor</button>
+    </div>
+
+    <div class="final-result">
+        First 5 Score will win the Game ..
+    </div>
+
+    <button class="play-again">Play again</button>
 </body>
 </html>
