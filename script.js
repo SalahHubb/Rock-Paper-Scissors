@@ -1,83 +1,93 @@
-/*
-     pseudocode
-Create a getComputerChoice that return random play choice : "paper", "rock", "scissor"
-Create a getUserChoice that return user input play choice
-Declare userScore and computerScore variables
-Create a playRound func with userChoice and computerChoice
-        - make user choice case-insensitive
-        - identify who beat the round
-        - display a string "You lose! Paper beaats rock"
-        - increment the score of the winner
-Create a playGame func :
-      - for 1 to 5 :
-           - Call getComputerChoice and assign to  a variable called computerSelection
-           - Call getUserChoice and assign to avariable called userSelection
-           - Call playRound with computerSelection and userSelection
- 
-*/
 
-function getComputerChoice() {
-    let randomNumber = Math.floor(Math.random() * 3)
-    if (randomNumber === 1) {
-        return "paper";
-    } else if (randomNumber === 2) {
-        return "rock";
-    } else {
-        return "scissor";
-    }
-}
-
-function getUserChoice() {
-    let userInput = prompt("Enter your choice");
-    return userInput;
-}
 
 let userScore = 0;
 let computerScore = 0;
 
+
+function getComputerChoice() {
+      // return random array item
+    const choices = ["paper", "rock", "scissor"];
+    return choices[Math.floor(Math.random() * choices.length)];
+}
+
 function playRound(userChoice, computerChoice) {
-    userChoice = userChoice.toLowerCase();
+    let roundsResult = document.querySelector('.rounds-result');
+    let usrScore =  document.querySelector("#usrScore"); // the span in the html
+    let cpuScore =  document.querySelector("#cpuScore") // the span in the html
+
     if (userChoice === "rock") {
         if (computerChoice === "paper") {
-            console.log("You lose! Paper beats Rock")
-            computerChoice++;
+                // display the round winner
+            roundsResult.textContent = "You lose! Paper beats Rock";
+            computerScore++;
+            cpuScore.textContent = `${computerScore}`;
+
         } else if (computerChoice === "scissor") {
-            console.log("You win! Rock beats scissor")
+            roundsResult.textContent = "You win! Rock beats Scissor";
             userScore++;
+            usrScore.textContent = `${userScore}`;
         } else {
-            console.log("Equal! try again");
+            roundsResult.textContent = "It's a tie!";
         }
     } else if (userChoice === "paper") {
         if (computerChoice === "rock") {
-            console.log("You win! Paper beats rock")
+            roundsResult.textContent = "You win! Paper beats Rock";
             userScore++;
+            usrScore.textContent = `${userScore}`;
         } else if (computerChoice === "scissor") {
-             console.log("You lose! Scissor beats Paper");
-             computerScore++;
+            roundsResult.textContent = "You lose! Scissor beats Paper";
+            computerScore++;
+            cpuScore.textContent = `${computerScore}`;
         } else {
-            console.log("Equal! try again");
+            roundsResult.textContent = "It's a tie!";
         }
     } else {
         if (computerChoice === "paper") {
-            console.log("You win! Scissor beats paper");
+            roundsResult.textContent = "You win! Scissor beats Paper";
             userScore++;
+            usrScore.textContent = `${userScore}`;
         } else if (computerChoice === "rock") {
-            console.log("You lose! Rock beats Scissor");
+            roundsResult.textContent = "You lose! Rock beats Scissor";
             computerScore++;
+            cpuScore.textContent = `${computerScore}`;
         } else {
-            console.log("Equal! try again");
+            roundsResult.textContent = "It's a tie!";
         }
     }
 }
 
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        let computerSelection = getComputerChoice();
-        let userSelection = getUserChoice();
-        playRound(userSelection, computerSelection)
-    }
-    return userScore > computerScore ? "You win the game!" : "Computer win the game!";
+function playAgain() {
+    document.querySelector("#usrScore").textContent = "0";
+    document.querySelector("#cpuScore").textContent = "0";
+    document.querySelector(".rounds-result").textContent = "Choose one and start the game .. ";
+    document.querySelector(".final-result").textContent = "First 5 point will win the game ..";    
 }
 
-let winnerPlayer = playGame();
-console.log(winnerPlayer);
+function gameOver (userScore, computerScore) {
+    document.querySelector(".rounds-result").textContent = "Game Over!";
+    document.querySelector(".final-result").textContent = (
+        `You ${userScore > computerScore ? "Win" : "lose"} the game!`
+    );
+}
+
+const buttons = document.querySelector('.buttons');
+buttons.addEventListener("click", (e) => {
+
+    if (userScore == 5 || computerScore == 5) {
+        gameOver();
+    } else {
+        let userSelection = e.target.id;
+        let computerSelection = getComputerChoice();
+    
+        playRound(userSelection, computerSelection);
+    }
+});
+
+document.querySelector("button.play-again").addEventListener("click", () => {
+  playAgain();
+})
+   
+
+
+
+
